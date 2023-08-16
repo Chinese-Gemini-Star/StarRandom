@@ -1,0 +1,20 @@
+.fullScreen {
+    height: 100%;
+}
+
+.colBottom {
+    position: fixed;
+    bottom: 0;
+}
+
+.rowTitle {
+    font-size: x-large;
+}
+
+.nowrap {
+    white-space: nowrap;
+}
+
+.rowCenter {
+    margin: 0 auto;
+}

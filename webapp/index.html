@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="zh-cn" style="height: 100%;">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" href="img/unnamed.webp">
+<link rel="apple-touch-icon" href="img/unnamed.webp">
+<link rel="shortcut" href="img/unnamed.webp">
+<!-- Bootstrap5核心CSS文件 -->
+<link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/5.1.1/css/bootstrap.min.css">
+
+<link rel="stylesheet" href="css/index.css">
+<title>星光随机数</title>
+</head>
+
+<body class="fullScreen">
+    <!-- 主体 -->
+    <div class="container-fluid d-flex flex-column justify-content-center fullScreen">
+        <div class="rowCenter">
+            <div class="col fullScreen">
+                <h1 class="text-center mb-5">星光随机数生成器</h1>
+
+                <!-- 随机数生成要求表单,由jq通过ajax发送请求,不使用原生功能 -->
+                <form action="/" method="get" onsubmit="return ajaxGet()" id="main">
+                    <!--随机数范围输入框-->
+                    <div class="row mb-3">
+                        <div class="col-3 d-flex flex-column justify-content-center" style="width:fit-content">
+                            <label for="left" class="form-label nowrap" style="font-size: 1.5vmax">随机数范围:</label>
+                        </div>
+                        <!-- 范围组合输入框 -->
+                        <div class="col d-inline-flex input-group-lg">
+                            <span class="input-group-text" style="font-size: 2vmax;width: 1vm;">[</span>
+                            <div class="form-floating">
+                                <input type="text" required class="form-control" id="left" placeholder="左界" name="left"
+                                    style="font-size: 2.5vmin;width: 16vw;">
+                                <label for="left" style="font-size: 2vmin; width: 100%;">最小值</label>
+                            </div>
+                            <span class="input-group-text" style="font-size: 2vmax; width: 1vw;">:</span>
+                            <div class="form-floating">
+                                <input type="text" required class="form-control" id="right" placeholder="右界"
+                                    name="right" style="font-size: 2.5vmin;width: 16vw;">
+                                <label for="right" style="font-size: 2vmin; width: 100%;">最大值</label>
+                            </div>
+                            <span class="input-group-text" style="font-size: 2vmax; width: 1vw;">]</span>
+                        </div>
+                    </div>
+                    <!-- 生成随机数数量 -->
+                    <div class="mb-3">
+                        <label for="count" class="form-label nowrap" style="font-size: 1.5vmax">随机数数量:</label>
+                        <label for="count" id="showRange" class="form-label nowrap mx-2"
+                            style="font-size: 1.5vmax"></label>
+                        <input type="range" class="form-range" id="count" name="number" min="1" max="50"
+                            oninput="showFormRange()">
+                    </div>
+                    <!-- 是否允许重复 -->
+                    <div class="d-flex flex-column justify-content-center fullScreen">
+                        <div class="rowCenter">
+                            <div class="form-check form-switch mb-3">
+                                <input type="checkbox" class="form-check-input" id="isRepeat" name="isRepeat"
+                                    value="true" checked>
+                                <label for="isRepeat" class="form-check-label nowrap"
+                                    style="font-size: 1.5vmax">可重复</label>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- 提交按钮 -->
+                    <div class="d-flex flex-column justify-content-center fullScreen">
+                        <div class="rowCenter">
+                            <div class="mb-3 rowCenter">
+                                <button type="submit" class="btn btn-primary nowrap"
+                                    style="font-size: 1.5vmax">生成</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- 备案悬挂 -->
+    <div class="container-fluid text-center colBottom" id="record">
+        <a href="https://beian.miit.gov.cn/" target="_blank">浙ICP备2023018825号</a>
+    </div>
+    </div>
+
+    <!-- jQuery -->
+    <script src="js/jquery-3.7.0.min.js"></script>
+    <!-- popper用于弹窗、提示、下拉菜单 -->
+    <script src="https://cdn.staticfile.org/popper.js/2.9.3/umd/popper.min.js"></script>
+    <!-- Bootstrap5核心JavaScript文件 -->
+    <script src="https://cdn.staticfile.org/twitter-bootstrap/5.1.1/js/bootstrap.min.js"></script>
+
+    <script src="js/form.js"></script>
+</body>
+
+</html>
