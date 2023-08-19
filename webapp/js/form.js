@@ -31,7 +31,13 @@ function ajaxGet() {
 
     // 表单验证
     if (data.left > data.right) {
+        // 范围不成立
         alert("最小值不应当大于最大值");
+        return false;
+    }
+    if(!data.isRepeat && data.number > data.right - data.left + 1) {
+        // 范围内不可能不重复
+        alert("此范围不可能不重复");
         return false;
     }
 
