@@ -7,6 +7,7 @@ import (
 
 func main() {
 	app := iris.Default()
+	app.Logger().SetLevel("debug")
 
 	server.BindRouters(app)
 
