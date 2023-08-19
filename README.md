@@ -1,12 +1,26 @@
 # StarRandom
 
-## 项目介绍
+## 项目信息
 
 此项目目前运行在:[https://random.geministar.site/](https://random.geministar.site/)
 
 一个简易的随机数生成平台
 
-可以自定义随机数的上限和下限、数量以及是否可重
+可以自定义随机数的上限和下限、数量以及是否可重.
+
+## 项目介绍
+
+### 前端
+
+位于[/webapp](https://github.com/Chinese-Gemini-Star/StarRandom/tree/main/webapp)目录下
+
+采用bootstrap5框架和jQuery,通过AJAX技术与后端通信并更新网页.
+
+### 后端
+
+位于[/server](https://github.com/Chinese-Gemini-Star/StarRandom/tree/main/server)目录下
+
+采用iris框架,并尝试着使用了MVC设计模式.
 
 ## 更多功能
 
