@@ -35,6 +35,11 @@ function ajaxGet() {
         alert("最小值不应当大于最大值");
         return false;
     }
+    if(data.left >= 1000 || data.right >= 1000) {
+        // 范围不成立
+        alert("请求的随机数范围过大,因为某人太懒了,请输入1000以内的范围");
+        return false;
+    }
     if(!data.isRepeat && data.number > data.right - data.left + 1) {
         // 范围内不可能不重复
         alert("此范围不可能不重复");
