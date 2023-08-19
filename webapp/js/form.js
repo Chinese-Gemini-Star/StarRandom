@@ -25,8 +25,8 @@ function ajaxGet() {
 
     // ajax get请求服务器
     $.ajax({
-        // url: "/getRandom",
-        type: "GET",
+        // url: "/postRandom",
+        type: "POST",
         async: true,
         data: json,
         success: function (result) {
@@ -34,9 +34,9 @@ function ajaxGet() {
         },
         error: function (xhr) {
             // console.log(xhr);
-            if (xhr.status == 404) {
+            if (xhr.status === 404) {
                 window.location.href = "/404.html";
-            } else if (xhr.status == 502) {
+            } else if (xhr.status === 502) {
                 window.location.href = "/502.html";
             } else {
                 alert("请求发送失败,请检查您的浏览器状态与网络状态.");

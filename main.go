@@ -1,9 +1,17 @@
 package main
 
-import "github.com/gin-gonic/gin"
+import (
+	server "StarRandom/server/controller"
+	"github.com/kataras/iris/v12"
+)
 
 func main() {
-	r := gin.Default()
+	app := iris.Default()
 
-	r.StaticFile("/")
+	server.BindRouters(app)
+
+	err := app.Listen(":80")
+	if err != nil {
+		app.Logger().Error(err)
+	}
 }
