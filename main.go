@@ -11,7 +11,7 @@ func main() {
 
 	server.BindRouters(app)
 
-	err := app.Listen(":80")
+	err := app.Listen(":24455")
 	if err != nil {
 		app.Logger().Error(err)
 	}
