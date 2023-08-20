@@ -22,7 +22,7 @@
                 <h1 class="text-center mb-5">星光随机数生成器</h1>
                 <!-- 随机数生成要求表单,由jq通过ajax发送请求,不使用原生功能 -->
                 <form id="randomInfo" class="" action="/" method="get" onsubmit="return ajaxGet()">
-                    <p class="text-center mb-4">非数值输入会被解析成0,小数会被取整</p>
+                    <p class="text-center mb-4">随机数的范围应是整数,且在[-1000,1000]之间</p>
                     <!--随机数范围输入框-->
                     <div class="row mb-3">
                         <div class="col-3 d-flex flex-column justify-content-center" style="width:fit-content">

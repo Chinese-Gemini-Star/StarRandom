@@ -12,9 +12,13 @@ func postRandomController(ctx iris.Context) {
 
 	// 获取随机数要求
 	err := ctx.ReadJSON(randomInfo)
-	if err != nil {
-		ctx.Application().Logger().Error(err)
+	if err != nil || !randomInfo.Check() {
+		ctx.Application().Logger().Error("随机数要求存在异常信息", err)
+		ctx.StatusCode(iris.StatusForbidden)
+		ctx.Text("Your JSON has something wrong!")
+		return
 	}
+
 	ctx.Application().Logger().Printf("随机数范围:[%d:%d], 数量: %d, 是否可重:%t", randomInfo.Left, randomInfo.Right, randomInfo.Number, randomInfo.IsRepeat)
 
 	randoms := server.Randoms{}

@@ -18,10 +18,15 @@ function ajaxGet() {
     let data = {};
     $.each($("#randomInfo").serializeArray(), function (index, item) {
         let value = item.value;
-
+        let isAllNumber = new RegExp(/^\d{1,}$/);
         // 类型转换
         if (item.name === "left" || item.name === "right" || item.name === "number") {
-            value = parseInt(value)
+            if (isAllNumber.test(value)) {
+                value = parseInt(value)
+            }
+            else {
+                value = NaN;
+            }
         } else if (item.name === "isRepeat") {
             value = value === "true"
         }
@@ -30,17 +35,22 @@ function ajaxGet() {
     });
 
     // 表单验证
+    if (isNaN(data.left) || isNaN(data.right) || data.left === null || data.right === null) {
+        // 输入不合法
+        alert("请输入整数");
+        return false;
+    }
     if (data.left > data.right) {
         // 范围不成立
         alert("最小值不应当大于最大值");
         return false;
     }
-    if(data.left >= 1000 || data.right >= 1000) {
-        // 范围不成立
-        alert("请求的随机数范围过大,因为某人太懒了,请输入1000以内的范围");
+    if (data.left < -1000 || data.right > 1000) {
+        // 范围过大
+        alert("请求的随机数范围过大,因为某人太懒了,请输入-1000到1000以内的范围");
         return false;
     }
-    if(!data.isRepeat && data.number > data.right - data.left + 1) {
+    if (!data.isRepeat && data.number > data.right - data.left + 1) {
         // 范围内不可能不重复
         alert("此范围不可能不重复");
         return false;
