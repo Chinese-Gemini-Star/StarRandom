@@ -1,0 +1,88 @@
+version: '3'
+
+silent: true
+output: prefixed
+shopt: [globstar]
+
+vars:
+  DEFAULT_ENV: dev
+
+tasks:
+  default:
+    desc: 显示可用的任务
+    cmds:
+      - task --list
+
+  build:
+    desc: 编译cmd目录下所有main包,输出到target目录.
+    summary: |
+      编译cmd目录下所有main包,输出到target目录.
+      默认编译成当前操作系统的可执行文件.
+      可以通过设置T变量来指定目标平台,例如:T=linux/amd64
+    dir: '{{.USER_WORKING_DIR}}'
+    vars:
+      DEFAULT_GOOS:
+        sh: go env GOOS
+      DEFAULT_GOARCH:
+        sh: go env GOARCH
+      T: '{{.T | default (printf "%s/%s" .DEFAULT_GOOS .DEFAULT_GOARCH)}}'
+      SOURCE_FILES:
+        sh: find cmd -type f -name "*.go" -exec grep -l "^package main" {} \;
+    cmds:
+      - echo "正在初始化构建..."
+      - echo "目标平台:{{.T}}"
+      - echo "要构建的文件:{{.SOURCE_FILES}}"
+      - for: {var: SOURCE_FILES}
+        task: build:{{.ITEM}}
+        vars:
+          SOURCE_FILE: '{{.ITEM}}'
+          T: '{{.T}}'
+      - echo "构建完成."
+
+  build:*:
+    internal: true
+    label: 'build:{{.SOURCE_FILE}}'
+    vars:
+      GOOS: '{{index (splitList "/" .T) 0}}'
+      GOARCH: '{{index (splitList "/" .T) 1}}'
+      SOURCE_FILE: '{{index .MATCH 0}}'
+      RELATIVE_PATH_NO_EXT: '{{trimSuffix ".go" (trimPrefix "cmd/" .SOURCE_FILE)}}'
+      EXT: '{{if eq .GOOS "windows"}}.exe{{end}}'
+      OUTPUT_FILE: 'target/{{.GOOS}}_{{.GOARCH}}/{{.RELATIVE_PATH_NO_EXT}}{{.EXT}}'
+    cmds:
+      - mkdir -p '{{dir .OUTPUT_FILE}}'
+      - echo "--> 正在编译:{{.SOURCE_FILE}} -> {{.OUTPUT_FILE}}"
+      - env:
+          GOOS: '{{.GOOS}}'
+          GOARCH: '{{.GOARCH}}'
+        cmd: go build -ldflags="-s -w" -o "{{.OUTPUT_FILE}}" "{{.SOURCE_FILE}}"
+        ignore_error: true
+
+  clean:
+    desc: 清理构建产物
+    cmds:
+      - echo "正在清理构建产物..."
+      - rm -rf target/
+      - echo "清理完成."
+
+  install:
+    desc: 安装依赖并清理
+    cmds:
+      - echo "正在安装依赖..."
+      - go mod download
+      - go mod tidy
+      - echo "依赖安装完成."
+
+  fmt:
+    desc: 格式化代码
+    cmds:
+      - echo "格式化代码..."
+      - go fmt ./...
+      - echo "代码格式化完成."
+
+  vet:
+    desc: 静态代码检查
+    cmds:
+      - echo "正在运行静态检查..."
+      - go vet ./...
+      - echo "静态检查完成."
